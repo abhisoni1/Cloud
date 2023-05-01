@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+.wrapper {
+  padding: 5px 20px;
+}
+
+.wrapper fieldset {
+  margin: 20px 0;
+}
+
+table {
+  border: 2px solid forestgreen;
+  width: 800px;
+  height: 100px;
+}
+  
+th {
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+}
+  
+td {
+  text-align: center;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.inputarea {
+  margin: 10px 10px 50px 10px;
+  /* border: 1px solid black; */
+}
+
+.outputarea {
+  margin-top: 50px;
+}
