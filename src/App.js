@@ -1,8 +1,9 @@
-import { Component, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
 import axios from 'axios';
 import VoicesTable from './table';
+import LoadingSpinner from "./loader"
 
 export default function App (){
 
@@ -14,6 +15,7 @@ export default function App (){
 
   const [ tableRows, setTableRows ] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const api = 'https://r3jrsnowsb.execute-api.us-east-1.amazonaws.com/v1';
@@ -24,9 +26,6 @@ export default function App (){
     axios
       .post(api, data)
       .then((response) => {
-        // console.log(response);
-        // console.log(response.data.maleVoices);
-        // console.log(response.data.femaleVoices);
         setMaleVoices(response.data.maleVoices);
         setFemaleVoices(response.data.femaleVoices);
       })
@@ -54,6 +53,10 @@ export default function App (){
 
   function getAudioUrl(text, voice, recordId){
 
+    // console.log(text, voice, recordId);
+
+    setIsLoading(true);
+
     const data = {
       "recordId" : recordId
     }
@@ -63,7 +66,7 @@ export default function App (){
     axios
       .post(api, data)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
 
         const url = response.data.body;
 
@@ -75,11 +78,14 @@ export default function App (){
             "recordId" : recordId
           }
         ]
-  
+
+        console.log(row)
         
-        const tableRows = row;
-  
-        setTableRows(tableRows);
+        setTimeout(() => {
+          setTableRows(row);
+          setIsLoading(false);
+
+        }, 3000);
       })
       .catch((error) => {
         console.log(error);
@@ -91,7 +97,6 @@ export default function App (){
 
     event.preventDefault();
 
-    console.log(inputText, voice);
 
     const data = {
       "voice" : voice,
@@ -103,8 +108,6 @@ export default function App (){
     axios
     .post(api, data)
     .then((response) => {
-      console.log(response);
-      console.log(response.data.body)
 
       const body = response.data.body;
 
@@ -119,23 +122,29 @@ export default function App (){
 
   }
 
-  return (
+  const renderTable = (
+    <div className='outputarea'>
+      <VoicesTable tableRows={tableRows}/>
+    </div>
+  );
+
+  return <>
     <div className="wrapper">
       <h1>Smart Text to Audio Converter</h1>
 
       <div className='inputarea'>
         <form onSubmit={convertToAudio}>
       
-          <label for="inputText">Input Text : </label><br></br>
+          <label htmlFor="inputText">Input Text : </label><br></br>
           <textarea id="inputText" name="text" rows="4" cols="50" onChange={(e) => setInputText(e.target.value) }/>
 
           <br></br>
           <br></br>
 
-          <label for="voice">Choose a voice : </label>
+          <label htmlFor="voice">Choose a voice : </label>
 
-          <select name="voices" id="voice" onChange={(e) => setVoice(e.target.value)}>
-            <option value="choose" disabled selected="selected">
+          <select name="voices" id="voice" onChange={(e) => setVoice(e.target.value)} defaultValue="choose">
+            <option value="choose" disabled>
               -- Select voice --
             </option>
             <optgroup label="Male Voices" >
@@ -150,17 +159,19 @@ export default function App (){
           <br></br>
           <br></br>
         
-          <button type="submit">Convert to Audio</button>
+          <button type="submit" disabled={ (inputText.trim() !== '' && voice.trim() !== '') ? false : true}>Convert to Audio</button>
 
         </form>
       </div>
       
       <hr></hr>
 
-      <div className='outputarea'>
+      {/* <div className='outputarea'>
         <VoicesTable tableRows={tableRows}/>
-      </div>
+      </div> */}
+
+      {isLoading ? <LoadingSpinner /> : renderTable}
     </div>
-  );
+  </>
   
 }

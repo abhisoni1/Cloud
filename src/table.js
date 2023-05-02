@@ -1,13 +1,10 @@
-import { Component } from "react";
 
 
 export default function VoicesTable(props){
 
     const { tableRows } = props;
 
-    // console.log(row);
-
-    return (
+    return <>
         <div>
             <h1>Text to Audio converted results:</h1>
             <table>
@@ -27,9 +24,12 @@ export default function VoicesTable(props){
                                     <td>{row.text}</td>
                                     <td>{row.voice}</td>
                                     <td>
-                                        <audio controls>
+                                        <audio controls src={row.url} type="audio/mpeg" autoPlay>
                                             {/* <source src="horse.ogg" type="audio/ogg"> */}
-                                            <source src={row.url} type="audio/mpeg"/>
+                                            {/* <source src={row.url} type="audio/mpeg" autoplay/> */}
+                                            {/* <p>
+                                                Download <a href="myAudio.mp3">MP3</a>
+                                            </p> */}
                                             {/* Your browser does not support the audio element. */}
                                         </audio>
                                     </td>
@@ -54,7 +54,7 @@ export default function VoicesTable(props){
                 </tbody>
             </table>
         </div>
-    )
+    </>    
 
 
 }
