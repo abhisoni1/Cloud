@@ -37,36 +37,137 @@
   }
 }
 
-.wrapper {
-  padding: 5px 20px;
-}
 
-.wrapper fieldset {
-  margin: 20px 0;
-}
 
-table {
-  border: 2px solid forestgreen;
-  width: 800px;
-  height: 100px;
-}
-  
-th {
-  border-bottom: 1px solid black;
-  border-right: 1px solid black;
-}
-  
-td {
+
+.main {
   text-align: center;
-  border-bottom: 1px solid black;
-  border-right: 1px solid black;
+  justify-content: center;
+  display:flex;
+  padding: 90px 0 90px 0;
+  background-color: aliceblue;
 }
 
-.inputarea {
-  margin: 10px 10px 50px 10px;
-  /* border: 1px solid black; */
+.sub-main {
+  display: flex;
+  justify-content: center;
+  height: 550px;
+  width: 90%;
+  box-shadow: 11px 12px 13px 12px rgb(207, 207, 207);
+  /* padding-top: 30px; */
+  /* border-radius: 40px; */
+  background-color: white;
+  overflow-y: auto;
 }
 
-.outputarea {
-  margin-top: 50px;
+.subsubmain {
+  /* overflow-y: auto; */
+}
+
+
+textarea{
+  width: 500px;
+  padding-left: 15px;
+  border-radius: 20px;
+  box-shadow: inset 0px 0px 5px 0px #b3aaaa;
+}
+
+.textareaInput{
+  padding-top: 25px;
+}
+
+select {
+  width: 250px;
+  height: 25px;
+  border-radius: 20px;
+  box-shadow: inset 0px 0px 5px 0px #beb2b2;
+}
+
+.selectInput{
+  padding-top: 25px;
+}
+
+button {
+  width: 300px;
+  height: 40px;
+  border-radius: 20px;
+  border: 1px solid #000000;
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 254, 254);
+  font-size: 25px;
+  /* cursor: pointer; */
+}
+
+button:hover {
+  border: 1px solid #0099cc;
+  background-color: #00aacc;
+  color: #ffffff;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.submitButton {
+  padding-top: 25px;
+}
+
+
+.outputTable {
+  padding: 60px 10px 10px 10px;
+  
+}
+
+.tablecontainer {
+  background: rgb(237, 237, 237);
+  border-radius: 8px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11), 0 2px 2px rgba(0, 0, 0, 0.11),
+  0 4px 4px rgba(0, 0, 0, 0.11), 0 6px 8px rgba(0, 0, 0, 0.11), 0 8px 16px rgba(0, 0, 0, 0.11);
+}
+
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+
+.thead {
+  position: sticky;
+  z-index: 100;
+}
+
+
+.trhead {
+  background: rgb(245, 245, 245);
+}
+
+
+.th {
+  padding: 8px 12px;
+  color: #000000;
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: 14px;
+  width: 200px;
+}
+
+.trbody{
+  background-color: white;
+}
+
+.td {
+  padding: 8px 12px;
+  border: 1px solid rgb(237, 237, 237);
+  font-size: 14px;
+  width: 200px;
 }

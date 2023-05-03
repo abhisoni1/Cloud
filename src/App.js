@@ -51,9 +51,7 @@ export default function App (){
   
   }
 
-  function getAudioUrl(text, voice, recordId){
-
-    // console.log(text, voice, recordId);
+  function getAudioUrl(text, translatedText, voice, recordId){
 
     setIsLoading(true);
 
@@ -66,7 +64,6 @@ export default function App (){
     axios
       .post(api, data)
       .then((response) => {
-        // console.log(response);
 
         const url = response.data.body;
 
@@ -74,13 +71,12 @@ export default function App (){
           {
             "url" : url,
             "text" : text,
+            "translatedText" : translatedText,
             "voice" : voice,
             "recordId" : recordId
           }
         ]
 
-        console.log(row)
-        
         setTimeout(() => {
           setTableRows(row);
           setIsLoading(false);
@@ -97,7 +93,6 @@ export default function App (){
 
     event.preventDefault();
 
-
     const data = {
       "voice" : voice,
       "text" : inputText
@@ -111,9 +106,9 @@ export default function App (){
 
       const body = response.data.body;
 
-      getAudioUrl(body.text, body.voice, body.recordId);
+      console.log(body);
 
-      
+      getAudioUrl(body.inputText, body.TranslatedText, body.voice, body.recordId);
 
     })
     .catch((error) => {
@@ -129,48 +124,58 @@ export default function App (){
   );
 
   return <>
-    <div className="wrapper">
-      <h1>Smart Text to Audio Converter</h1>
+    <div className="main">
 
-      <div className='inputarea'>
-        <form onSubmit={convertToAudio}>
-      
-          <label htmlFor="inputText">Input Text : </label><br></br>
-          <textarea id="inputText" name="text" rows="4" cols="50" onChange={(e) => setInputText(e.target.value) }/>
-
-          <br></br>
-          <br></br>
-
-          <label htmlFor="voice">Choose a voice : </label>
-
-          <select name="voices" id="voice" onChange={(e) => setVoice(e.target.value)} defaultValue="choose">
-            <option value="choose" disabled>
-              -- Select voice --
-            </option>
-            <optgroup label="Male Voices" >
-              {getMaleVoices()}
-            </optgroup>
-            <optgroup label="Female Voices">
-              {getFemaleVoices()}
-            </optgroup>
-          </select>
-          
-
-          <br></br>
-          <br></br>
+      <div className='sub-main'>
+        <div className='subsubmain'>
+          <div>
+            <div>
+              <h1>Smart Text to Audio Converter</h1>
+            </div>
+            <div className='inputArea'>
+              <form id="inputForm" onSubmit={convertToAudio}>
         
-          <button type="submit" disabled={ (inputText.trim() !== '' && voice.trim() !== '') ? false : true}>Convert to Audio</button>
+                <div className='textareaInput'>
+                  <textarea id="inputText" placeholder='Input Text' className='inputData' name="text" rows="5" cols="50" onChange={(e) => setInputText(e.target.value) }/>
+                </div>
 
-        </form>
+                <div className='selectInput'>
+                  <select id="voice" className='inputData' name="voices" onChange={(e) => setVoice(e.target.value)} defaultValue="choose">
+                    <option value="choose" disabled>
+                      -- Select voice --
+                    </option>
+                    <optgroup label="Male Voices" >
+                      {getMaleVoices()}
+                    </optgroup>
+                    <optgroup label="Female Voices">
+                      {getFemaleVoices()}
+                    </optgroup>
+                  </select>
+                </div>
+                
+                <div className='submitButton'>
+                  <button type="submit" disabled={ (inputText.trim() !== '' && voice.trim() !== '') ? false : true}>Convert to Audio</button>
+                </div>
+
+              </form>
+
+            </div>
+              {/* <hr></hr> */}
+            <div>
+              {/* {isLoading ? <LoadingSpinner /> : renderTable} */}
+              { isLoading ? <LoadingSpinner /> :
+                <div>
+                  { tableRows.length > 0 ? renderTable : <></>} 
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        
       </div>
       
-      <hr></hr>
-
-      {/* <div className='outputarea'>
-        <VoicesTable tableRows={tableRows}/>
-      </div> */}
-
-      {isLoading ? <LoadingSpinner /> : renderTable}
+      
     </div>
   </>
   
